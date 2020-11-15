@@ -1,10 +1,9 @@
-const client = require('../lib/client');
-const { getEmoji } = require('../lib/emoji.js');
+const client = require("../lib/client");
+const { getEmoji } = require("../lib/emoji.js");
 
 run();
 
 async function run() {
-
   try {
     await client.connect();
 
@@ -12,13 +11,10 @@ async function run() {
             DROP TABLE IF EXISTS meetings;
         `);
 
-    console.log(' drop tables complete', getEmoji(), getEmoji(), getEmoji());
-  }
-  catch (err) {
+    console.log(" drop tables complete", getEmoji(), getEmoji(), getEmoji());
+  } catch (err) {
     console.log(err);
-  }
-  finally {
+  } finally {
     client.end();
   }
-
 }

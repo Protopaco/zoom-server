@@ -1,13 +1,12 @@
-const client = require('../lib/client');
+const client = require("../lib/client");
 // import our seed data:
-const meetings = require('./meetings.js');
+const meetings = require("./meetings.js");
 // const usersData = require('./users.js');
-const { getEmoji } = require('../lib/emoji.js');
+const { getEmoji } = require("../lib/emoji.js");
 
 run();
 
 async function run() {
-
   try {
     await client.connect();
 
@@ -25,23 +24,26 @@ async function run() {
     // const user = users[0].rows[0];
 
     await Promise.all(
-      meetings.map(meeting => {
-        return client.query(`
+      meetings.map((meeting) => {
+        return client.query(
+          `
                     INSERT INTO meetings (user_token, chat_url, timeline_url, video_url)
                     VALUES ($1, $2, $3, $4);
                 `,
-          [meeting.user_token, meeting.chat_url, meeting.timeline_url, meeting.video_url]);
+          [
+            meeting.user_token,
+            meeting.chat_url,
+            meeting.timeline_url,
+            meeting.video_url,
+          ]
+        );
       })
     );
 
-
-    console.log('seed data load complete', getEmoji(), getEmoji(), getEmoji());
-  }
-  catch (err) {
+    console.log("seed data load complete", getEmoji(), getEmoji(), getEmoji());
+  } catch (err) {
     console.log(err);
-  }
-  finally {
+  } finally {
     client.end();
   }
-
 }
